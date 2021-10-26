@@ -1,0 +1,156 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Tingy Demo</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1HLHQYBS7V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-1HLHQYBS7V');
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="spinner.css">
+    <style>
+        .lds-dual-ring {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+        }
+
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border-radius: 50%;
+            border: 6px solid #333;
+            border-color: #333 transparent #333 transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
+
+        @keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+    <section>
+        <h1>3D Face Model</h1>
+    </section>
+    <section>
+        <div class="3d-result">
+        </div>
+    </section>
+
+    <div class="lds-dual-ring">axg</div>
+
+    <section>
+
+        <form action="" method="POST" id="form1" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" capture="environment">
+            <button type="submit" value="Submit">Submit</button>
+        </form>
+
+    </section>
+
+
+
+    <script language="JavaScript">
+
+        $(document).on('submit', 'form', function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            html_spinner = `<div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+            </div>`
+
+
+            $('.3d-result').html(html_spinner)
+
+            $.ajax({
+                type: 'POST',
+                url: '/conversion/upload',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data)
+                    html = `<aside><a href="${data.result.psu.psu}" rel="ar">View your 3d model</a></aside>`
+                    $('.3d-result').html(html);
+                }
+            });
+        })
+
+        // $(".ml-block-form").submit(function () {
+        //     var vals = $(this).serialize();
+
+        //     // var formData = new FormData(this);
+
+        //     $.ajax({
+        //         url: "/conversion/upload",
+        //         method: "POST",
+        //         data: new FormData(this),
+        //         enctype: 'multipart/form-data',
+        //         success: function (data) {
+        //             console.log(data);
+        //         }
+        //     });
+
+        //     return false; // prevent from submit
+        // });
+
+
+        // $("form1").submit(function (e) {
+        //     e.preventDefault();
+        //     var formData = new FormData(this);
+
+        //     var form = $(this);
+        //     var url = form.attr('action');
+
+        //     $.ajax({
+        //         url: '/conversion/upload',
+        //         type: 'POST',
+        //         data: formData,
+        //         success: function (data) {
+        //             console.log(data)
+        //         },
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false
+        //     });
+        //     return false;
+        // });
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+version: "2.3"
+
+services:
+  inference:
+    environment:
+      - PYTHONUNBUFFERED=1
+    build: inference/
+    command: serve
+    runtime: nvidia
+    ports:
+      - "8080:8080"
+  conversion:
+    build: conversion/
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "5000:5000"
+  nginx: 
+    image: nginx:latest
+    # container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./cert.pem:/etc/nginx/certs/cert.pem
+      - ./key.pem:/etc/nginx/certs/key.pem
+      - ./web/:/etc/nginx/html/
+    ports:
+      - 80:80
+      - 443:443

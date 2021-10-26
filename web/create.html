@@ -1,0 +1,131 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>facemodel</title>
+
+    <!-- Memberstack -->
+    <script src="https://api.memberstack.io/static/memberstack.js?custom"
+        data-memberstack-id="7573aefc04aaec91018d4f9872ff8717"> </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-34H2Z55B64"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-34H2Z55B64');
+    </script>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+
+    <style>
+        .lds-dual-ring {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+        }
+
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 35px;
+            height: 35px;
+            /* margin: 8px; */
+            border-radius: 50%;
+            border: 6px solid #333;
+            border-color: #333 transparent #333 transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
+
+        @keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+    <section>
+        <h1>3D Face Model</h1>
+    </section>
+
+    <section>
+        <div class="3d-result">
+            <aside><a href="384c2fd135424424ba7e4d3a77fc62f0.usdz" rel="ar"> <img src="tom-cruise-3d.jpg"
+                        alt="Tom Cruise in 3D"> </a></aside>
+        </div>
+    </section>
+
+    <section>
+        <aside class="info-box">
+            Upload a photo or take a selfie to create a 3D model of your head.
+            </br></br>The resulting USDZ file is viewable in AR on iPhone or as a 3D model on macOS
+        </aside>
+    </section>
+
+    <!-- <section>
+        <div>
+            <div class="lds-dual-ring">axg</div>
+        </div>
+    </section> -->
+
+    <section>
+        <form action="" method="POST" id="form1" enctype="multipart/form-data" style="width: 37px;">
+            <input type="file" name="file" accept="image/*" capture="environment" style="width: 270px;">
+            <button type="submit" value="Submit">Submit</button>
+        </form>
+    </section>
+
+
+
+    <script language="JavaScript">
+
+        $(document).on('submit', 'form', function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            html_spinner = `<aside><div class="lds-dual-ring" style="
+    margin-left: 40%;
+"></div></aside>`
+
+            $('.3d-result').html(html_spinner)
+
+            $('.info-box').html('Allow up to 60s for processing')
+
+            $.ajax({
+                type: 'POST',
+                url: '/conversion/upload',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log(data)
+                    html = `<aside><a href="${data.result.psu.psu}" rel="ar">View your 3d model</a></aside>`
+                    $('.3d-result').html(html);
+                }
+            });
+        })
+
+    </script>
+
+
+</body>
+
+</html>
