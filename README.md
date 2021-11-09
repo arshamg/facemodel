@@ -1,6 +1,6 @@
 # Facemodel
 
-![tom cruise](web/tom-cruise-3d.jpg "3D Tom Cruise")
+![tom cruise](web/tom-cruise-3d.jpg | width=100)
 
 Create 3D head models from a selfie. Facemodel outputs USDZ (an iPhone AR compatible format) and GLB, a more general 3D model format.
 
