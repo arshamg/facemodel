@@ -17,5 +17,8 @@ The machine learning component of Facemodel requires a GPU-enabled nvidia docker
 ### Build
 `docker-compose build`
 
-### Run
+### Deploy
 `docker-compose up`
+
+### Use
+Navigate to `http://localhost/`
